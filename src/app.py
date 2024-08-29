@@ -13,9 +13,6 @@ app.url_map.strict_slashes = False
 CORS(app)
 
 
-#TODO PROFE ME OLVIDE COMPLETAMENTE DE LOS TEST, RECIEN LOS HARE XD 
-#TODO REPITO, PROFE ME OLVIDE COMPLETAMENTE DE LOS TEST, RECIEN LOS HARE XD 
-#TODO VUELVO A REPETIR, PROFE ME OLVIDE COMPLETAMENTE DE LOS TEST, RECIEN LOS HARE XD 
 
 # create the jackson family object
 jackson_family = FamilyStructure("Jackson")
@@ -50,14 +47,16 @@ def sitemap():
 
 @app.route('/members', methods=['GET'])
 def get_members():
-    if request.content_type != 'application/json':
-        return jsonify({'error': 'content-type tiene que ser application/json'}), 400
+    # if request.content_type != 'application/json':
+    #     return jsonify({'error': 'content-type tiene que ser application/json'}), 400
     
     try:
         members = jackson_family.get_all_members()
 
         if members == []:
             return jsonify({'error': 'No hay miembros', 'code_status': 404}), 404
+        
+
         
         return jsonify(members), 200
     
@@ -67,8 +66,8 @@ def get_members():
 
 @app.route('/member/<int:member_id>', methods=['GET'])
 def get_member(member_id):
-    if request.content_type != 'application/json':
-        return jsonify({'error': 'content-type tiene que ser application/json'}), 400
+    # if request.content_type != 'application/json':
+    #     return jsonify({'error': 'content-type tiene que ser application/json'}), 400
     
     try:
         member = jackson_family.get_member(member_id)
@@ -103,8 +102,8 @@ def add_member():
 
 @app.route('/member/<int:member_id>', methods=['DELETE'])
 def delete_member(member_id):
-    if request.content_type != 'application/json':
-        return jsonify({'error': 'content-type tiene que ser application/json'}), 400
+    # if request.content_type != 'application/json':
+    #     return jsonify({'error': 'content-type tiene que ser application/json'}), 400
     
     try:
         jackson_family.delete_member(member_id)
