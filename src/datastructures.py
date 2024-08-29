@@ -12,7 +12,22 @@ class FamilyStructure:
     def __init__(self, last_name):
         self.last_name = last_name
         self._next_id = 1
-        self._members = []
+        self._members = [{
+                            'first_name': 'John',
+                            'age': 33,
+                            'lucky_numbers': [7, 13, 22]
+                        },
+                        {
+                            'first_name': 'Jane',
+                            'age': 35,
+                            'lucky_numbers': [10, 14, 3]
+                        },
+                        {
+                            'first_name': 'Jimmy',
+                            'age': 5,
+                            'lucky_numbers': [1]
+                        }
+                        ]
 
         # example list of members
         self._members = []
