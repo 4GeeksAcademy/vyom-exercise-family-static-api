@@ -48,7 +48,7 @@ def sitemap():
 @app.route('/members', methods=['GET'])
 def get_members():
     if request.content_type != 'application/json':
-        return jsonify({'error': 'Content-Type must be application/json'}), 400
+        return jsonify({'error': 'content-type tiene que ser application/json'}), 400
     
     try:
         members = jackson_family.get_all_members()
@@ -61,12 +61,12 @@ def get_members():
 @app.route('/member/<int:member_id>', methods=['GET'])
 def get_member(member_id):
     if request.content_type != 'application/json':
-        return jsonify({'error': 'Content-Type must be application/json'}), 400
+        return jsonify({'error': 'content-type tiene que ser application/json'}), 400
     
     try:
         member = jackson_family.get_member(member_id)
         if member is None:
-            return jsonify({'error': 'Member not found'}), 404
+            return jsonify({'error': 'Miembro no encontrado'}), 404
         return jsonify(member), 200
     
     except Exception as e:
@@ -76,14 +76,18 @@ def get_member(member_id):
 @app.route('/member', methods=['POST'])
 def add_member():
     if request.content_type != 'application/json':
-        return jsonify({'error': 'Content-Type must be application/json'}), 400
+        return jsonify({'error': 'content-type tiene que ser application/json'}), 400
 
     try:
         member = request.get_json()
         mandatorys = ['first_name', 'age', 'lucky_numbers']
         for require in mandatorys:
             if require not in member:
-                return jsonify({'error': f'Missing required field: {require}'}), 400
+                return jsonify({'error': f'Falta este dato: {require}'}), 400
+        
+        if not isinstance(member['age'], int) or member['age'] <= 0:
+            return jsonify({'error': 'Edad tiene que ser mayor a 0'}), 400
+            
 
         jackson_family.add_member(member)
         return jsonify(member), 200
@@ -93,7 +97,7 @@ def add_member():
 @app.route('/member/<int:member_id>', methods=['DELETE'])
 def delete_member(member_id):
     if request.content_type != 'application/json':
-        return jsonify({'error': 'Content-Type must be application/json'}), 400
+        return jsonify({'error': 'content-type tiene que ser application/json'}), 400
     
     try:
         jackson_family.delete_member(member_id)
